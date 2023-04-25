@@ -47,7 +47,18 @@ body {
   }
 }
 
+.menu-focused {
+  margin: 5px;
+  padding: 5px;
+  /* border: 5px solid #fff; */
+  border-radius: 5px;
+  background-color: #fff;
+  color: green !important;
+  font-weight: bold;
+}
+
 .focused {
+  margin: 5px;
   padding: 5px;
   border: 5px solid #fff;
 }
@@ -77,14 +88,18 @@ body {
 
 .flex_container {
   display: -webkit-flex;
+  border: 1px solid #fff;
+  padding: 20px;
+  border-radius: 5px;
   /* width: 30em; */
   /* overflow-x: auto; */
   overflow-x: hidden;
-  margin-top: 600px;
-  /* white-space: nowrap; */
-  /* padding: 10px;
-  height: 500px; */
-  /* width: 5000px;*/
+  margin-top: 500px;
+
+  /* flex: 0.33; */
+  background-color: #11111180;
+
+  /* padding: 10px 0; */
 }
 .item {
   /* background-color: #f1f1f1; */
@@ -93,7 +108,7 @@ body {
   margin: 20px;
   padding: 10px;
   font-size: 30px;
-  /* width: 500px; */
+  width: 300px;
   /* height: 200px; */
 
   /* background-color: red; */
@@ -137,4 +152,9 @@ body {
   to {
     transform: rotate(360deg);
   }
+}
+
+.main {
+  transition: margin-left 0.5s; /* If you want a transition effect */
+  padding: 20px;
 }

@@ -7,40 +7,23 @@
     <!-- <script type="text/javascript" src="$WEBAPIS/webapis/webapis.js"></script> -->
   </head>
   <body>
-    
-      <!-- <header class="header">
-      <img src="images/pnc.webp" alt="" width="500" />
-      <span class="weather" id="weather">Weather</span>
-    </header> -->
-      <span style="font-size: 30px; cursor: pointer" onmouseover="openNav()">
-        <div id="sidenav" class="sidenav" onmouseout="closeNav()">
-          <!-- <div>
-          <div style="float: left">
-            <img src="images/App_Icon336x210.png" width="200" />
-          </div>
-          <div style="float: right">
-            <div class="weather" id="weather"></div>
-          </div>
-        </div> -->
-          <table border="0" cellspacing="5">
-            <tr>
-              <td><img src="images/App_Icon336x210.png" width="200" /></td>
-              <td class="weather" id="weather"></td>
-            </tr>
-          </table>
-          <!-- <div id="1" class="">About</div>
-        <div id="2" class="">Services</div>
-        <div id="3" class="">Clients</div>
-        <div id="4" class="">Contact</div> -->
-        </div>
-      </span>
-      <div hidden id="spinner"></div>
-      <div id="background_icon_uri" class="bg-container"></div>
-      <div id="pagelist" class=""></div>
+    <span style="font-size: 30px; cursor: pointer" onmouseover="openNav()">
+      <div id="sidenav" class="sidenav" onmouseout="closeNav()">
+        <table border="0" cellspacing="5">
+          <tr>
+            <td><img src="images/App_Icon336x210.png" width="200" /></td>
+            <td class="weather" id="weather"></td>
+          </tr>
+        </table>
+      </div>
+    </span>
+    <div hidden id="spinner"></div>
+    <div id="background_icon_uri" class="bg-container"></div>
+    <div id="pagelist" class="main"></div>
 
-      <!--video list -->
-      <!-- <script defer src="./main.js"></script> -->
-      <script defer src="./serverData.js"></script>
-   
+    <!--video list -->
+    <!-- <script defer src="./main.js"></script> -->
+    <!-- <script defer src="./serverData.js"></script> -->
+    <script defer src="./serverdataMin.js"></script>
   </body>
 </html>

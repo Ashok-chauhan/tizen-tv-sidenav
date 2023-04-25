@@ -4,10 +4,11 @@
   function openNav() {
     //document.getElementById("sidenav").style.width = "250px";
     const nav = document.getElementById("sidenav");
+    document.querySelector(".main").style.marginLeft = "340px";
 
     nav.style.width = "340px";
     for (let i = 0; i < nav.children.length; i++) {
-      if (nav.children[i].classList.contains("focused")) {
+      if (nav.children[i].classList.contains("menu-focused")) {
         categoryId = nav.children[i].id;
         menu = true;
         break;
@@ -29,17 +30,15 @@
 
   function closeNav() {
     document.getElementById("sidenav").style.width = "0";
+    document.querySelector(".main").style.marginLeft = "0px";
     menu = false;
   }
 
   function registerKeyHandler() {
     document.addEventListener("keydown", function (e) {
       tizen.tvinputdevice.registerKey("Menu");
-      console.log(">> Evernts " + JSON.stringify(e));
-      console.log(">> Evernts code " + e.keyCode);
       switch (e.keyCode) {
         case 10133: // Menu 18
-          console.log("#### >> Menu");
           if (menu) {
             closeNav();
           } else {
@@ -48,14 +47,6 @@
           break;
 
         case 37: //left arrow
-          console.log("#### >> left Arrow" + categoryId);
-
-          // if (!categoryId) {
-          //   closeNav();
-          // } else {
-          //   openNav();
-          // }
-
           keys.parent = document.getElementById("pagelist");
           keys.key = keys.parent.firstElementChild;
 
@@ -86,14 +77,12 @@
 
           break;
         case 38: //up key
-          console.log("#### >> up Arrow");
-
           const upNav = document.getElementById("sidenav");
           const childCcount = upNav.children;
           let counter = 0;
 
           for (let i = 0; i < childCcount.length; i++) {
-            if (upNav.children[i].className === "focused") {
+            if (upNav.children[i].className === "menu-focused") {
               counter = i;
 
               break;
@@ -103,10 +92,10 @@
           for (let i = 0; i < childCcount.length; i++) {
             if (i === counter) {
               if (counter <= 0) break;
-              upNav.children[i].classList.remove("focused");
+              upNav.children[i].classList.remove("menu-focused");
               counter--;
 
-              upNav.children[counter].classList.add("focused");
+              upNav.children[counter].classList.add("menu-focused");
               categoryId = upNav.children[counter].id;
 
               videoList(categoryId);
@@ -119,18 +108,6 @@
           break;
 
         case 39: //right arrow
-          // const Nav = document.getElementById("sidenav");
-          // let chldCcount = Nav.children;
-          // console.log("####>> right arrow");
-          // for (let i = 0; i < chldCcount.length; i++) {
-          //   if (Nav.children[i].className === "focused") {
-          //     Nav.children[i].classList.remove("focused");
-          //   }
-          // }
-          // closeNav();
-
-          //////
-          // keys.blur();
           if (menu) {
             closeNav();
           }
@@ -139,9 +116,9 @@
           keys.key = keys.parent.firstElementChild;
 
           let arrowkeyName = keys.key.className;
-          console.log(">>>>" + arrowkeyName);
+
           catid = keys.key.id;
-          console.log(catid);
+
           let arrowKey = document.querySelector("." + arrowkeyName + "");
 
           let count = arrowKey.children;
@@ -175,7 +152,7 @@
           let lcounter = 0;
 
           for (let i = 0; i < lcount.length; i++) {
-            if (leftKey.children[i].className === "focused") {
+            if (leftKey.children[i].className === "menu-focused") {
               lcounter = i;
 
               break;
@@ -185,10 +162,10 @@
           for (let i = 0; i < lcount.length; i++) {
             if (i === lcounter) {
               if (lcounter === lcount.length - 1) break;
-              leftKey.children[i].classList.remove("focused");
+              leftKey.children[i].classList.remove("menu-focused");
               lcounter++;
 
-              leftKey.children[lcounter].classList.add("focused");
+              leftKey.children[lcounter].classList.add("menu-focused");
               categoryId = leftKey.children[lcounter].id;
 
               videoList(categoryId);
@@ -339,10 +316,12 @@
     <span style="width:80px;"><img src="${weatherData.icon}"/></span></div>`;
 
     if (bgImage) {
-      //document.body.style.opacity = "0.5";
+      //const bgdiv = document.getElementById("bg");
+      //document.body.style.opacity = "0.2";
       document.body.style.backgroundImage = "url(" + bgImage + ")";
+      //bgdiv.style.backgroundImage = "url(" + bgImage + ")";
     } else {
-      document.body.style.backgroundColor = "#cccccc";
+      document.body.style.backgroundColor = "#111";
     }
 
     var elemContent = document.getElementById("pagelist");
@@ -361,7 +340,7 @@
                 <div class="item" name="${categoryId}" id="${data.response.content[i].uri}" >
                 <a href="video.html?videoUrl=${data.response.content[i].uri}">
                 
-                  <img src="${data.response.content[i].icon_uri}"  />
+                  <img src="${data.response.content[i].icon_uri}" width="300"  />
                   
                   
                 
@@ -385,7 +364,6 @@
   window.onload = function () {
     registerKeyHandler();
 
-    console.log("kye registering");
     let firstCategory;
     category_id()
       .then((data) => {
