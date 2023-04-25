@@ -1,0 +1,140 @@
+body {
+  background-color: #ffffff;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  /* opacity: 0.5; */
+}
+
+.sidenav div {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  /* color: #818181; */
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+/* 
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+} */
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+.focused {
+  padding: 5px;
+  border: 5px solid #fff;
+}
+
+.header {
+  padding: 60px;
+  text-align: center;
+  background: hsl(252, 76%, 42%);
+  color: white;
+  font-size: 30px;
+}
+.weather {
+  float: right;
+}
+
+.bg-container {
+  height: 100%;
+  width: 100%;
+  /* width: 30em; */
+  /* overflow-x: auto; */
+
+  /* white-space: nowrap; */
+  /* padding: 10px;
+  height: 500px; */
+  /* width: 5000px;*/
+}
+
+.flex_container {
+  display: -webkit-flex;
+  /* width: 30em; */
+  /* overflow-x: auto; */
+  overflow-x: hidden;
+  margin-top: 600px;
+  /* white-space: nowrap; */
+  /* padding: 10px;
+  height: 500px; */
+  /* width: 5000px;*/
+}
+.item {
+  /* background-color: #f1f1f1; */
+  /* background-color: #272626; */
+
+  margin: 20px;
+  padding: 10px;
+  font-size: 30px;
+  /* width: 500px; */
+  /* height: 200px; */
+
+  /* background-color: red; */
+  position: relative;
+  width: 56.25%;
+  /*padding-top: 56.25%; */ /* 16:9 Aspect Ratio */
+}
+.title {
+  font-size: 35px;
+  /* margin: 10px; */
+  /* padding: 10px; */
+
+  color: #ffffff;
+}
+/* spinner */
+#spinner:not([hidden]) {
+  /* postion: fixed; */
+  position: relative;
+  top: 300px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#spinner::after {
+  content: "";
+  width: 80px;
+  height: 80px;
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid #f25a41;
+  border-radius: 100%;
+  will-change: transform;
+  animation: spin 1s infinite linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
