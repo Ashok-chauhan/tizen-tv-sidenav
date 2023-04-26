@@ -4,9 +4,9 @@
   function openNav() {
     //document.getElementById("sidenav").style.width = "250px";
     const nav = document.getElementById("sidenav");
-    document.querySelector(".main").style.marginLeft = "340px";
+    document.querySelector(".main").style.marginLeft = "400px";
 
-    nav.style.width = "340px";
+    nav.style.width = "400px";
     for (let i = 0; i < nav.children.length; i++) {
       if (nav.children[i].classList.contains("menu-focused")) {
         categoryId = nav.children[i].id;
@@ -329,7 +329,7 @@
       document.body.style.backgroundImage = "url(" + bgImage + ")";
       //bgdiv.style.backgroundImage = "url(" + bgImage + ")";
     } else {
-      document.body.style.backgroundColor = "#111";
+      document.body.style.backgroundColor = "#11111180";
     }
 
     var elemContent = document.getElementById("pagelist");
@@ -345,15 +345,22 @@
           for (let i = 0; i <= data.response.content.length; i++) {
             if (data.response.content[i].icon_uri) {
               div.innerHTML += `
-                <div class="item" name="${categoryId}" id="${data.response.content[i].uri}" >
+                <div class="item" name="${categoryId}" id="${
+                data.response.content[i].uri
+              }" >
                 <a href="video.html?videoUrl=${data.response.content[i].uri}">
                 
-                  <img src="${data.response.content[i].icon_uri}" width="300"  />
+                  <img src="${
+                    data.response.content[i].icon_uri
+                  }" width="300"  />
                   
                   
                 
                 <a>
-                <div class="title"> ${data.response.content[i].title}</div>
+                <div class="title"> ${truncateString(
+                  data.response.content[i].title,
+                  40
+                )}</div>
                 </div>`;
               //<span class="title"> ${data.response.content[i].title}</span>
             } else {
@@ -366,6 +373,14 @@
         });
       //elemContent.appendChild(catName);
       elemContent.appendChild(div);
+    }
+  }
+
+  function truncateString(str, num) {
+    if (str.length > num) {
+      return str.slice(0, num) + "...";
+    } else {
+      return str;
     }
   }
 

@@ -12,7 +12,7 @@ body {
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding-top: 0px;
   /* opacity: 0.5; */
 }
 
@@ -94,10 +94,10 @@ body {
   /* width: 30em; */
   /* overflow-x: auto; */
   overflow-x: hidden;
-  margin-top: 500px;
+  margin-top: 400px;
 
   /* flex: 0.33; */
-  background-color: #11111180;
+  background-color: #11111195;
 
   /* padding: 10px 0; */
 }
@@ -156,5 +156,5 @@ body {
 
 .main {
   transition: margin-left 0.5s; /* If you want a transition effect */
-  padding: 20px;
+  /* padding: 20px; */
 }
