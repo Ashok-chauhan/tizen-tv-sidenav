@@ -177,6 +177,14 @@
 
           break;
         case 13: //OK button
+          console.log("enter / ok button");
+          const videoUrl = document
+            .getElementsByClassName("item focused")
+            .item("id").id;
+          console.log(">>>" + videoUrl);
+          let ext = videoUrl.split(".").pop();
+          if (ext !== ".m3u8") window.location.href = "file:///index.html";
+          window.location.href = "file:///video.html?videoUrl=" + videoUrl;
           // var keyName = keys.key.id + keys.key.innerHTML,
           //   index;
           // if ((index = keys.registeredKeys.indexOf(keyName)) !== -1) {
