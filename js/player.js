@@ -1,10 +1,14 @@
-var objElem = document.createElement("object");
+var objElem = document.createElement("object"); //document.createElement("object");
 objElem.type = "application/avplayer";
 
 const queryString = location.search;
 const params = new URLSearchParams(queryString);
 const videoUrl = params.get("videoUrl");
+const subtitle_url = params.get("caption");
+// const subtitle_url =
+//   "https://vod.chdrstatic.com/transcode/7d325650-d5d2-4fcb-9638-4a963a58e09e/7d325650-d5d2-4fcb-9638-4a963a58e09e.transcribe.vtt"; //params.get("caption");
 console.log(videoUrl);
+
 //Adjust the size and position of the media display area
 //by changing the CSS style attribute
 // objElem.style.left = 10 + "px";
@@ -14,7 +18,7 @@ objElem.style.height = 1080 + "px";
 // objElem.style.width = 1080 + "px";
 // objElem.style.height = 720 + "px";
 objElem.controls = true;
-
+var subtitlesEl = document.querySelector("#subtitles");
 //Append the object element to your document
 document.body.appendChild(objElem);
 
@@ -86,7 +90,11 @@ var listener = {
   },
 
   onsubtitlechange: function (duration, text, data3, data4) {
-    console.log("subtitleText: " + text);
+    // console.log("subtitleText: " + text);
+    // console.log("subtitleText duration : " + duration);
+    // console.log("subtitleText: data3 " + data3);
+    // console.log("subtitleText: data4 " + data4);
+    subtitlesEl.innerText = text;
   },
   ondrmevent: function (drmEvent, drmData) {
     console.log("DRM callback: " + drmEvent + ", data: " + drmData);
@@ -132,9 +140,50 @@ webapis.avplay.setStreamingProperty("ADAPTIVE_INFO", bitRateString);
 
 //webapis.avplay.prepare();
 
+function downloadAndSetSubtitles() {
+  var subtitleFileName = "subtitle" + new Date().getTime();
+  var download = new tizen.DownloadRequest(
+    subtitle_url,
+    "wgt-private-tmp",
+    subtitleFileName
+  );
+
+  // Subtitles needs to be on device to get loaded
+  tizen.download.start(download, {
+    oncompleted: function (id, fullPath) {
+      tizen.filesystem.resolve(
+        "wgt-private-tmp",
+        function onResolveSuccess(dir) {
+          var packageURI;
+          try {
+            packageURI = dir.toURI().substring(7);
+            // Setting subtitles for the stream
+            webapis.avplay.setExternalSubtitlePath(
+              packageURI + "/" + subtitleFileName + ".vtt" //.smi
+            );
+          } catch (e) {
+            // On 2015 different format of the URI is needed
+            packageURI =
+              dir.toURI().replace("file://", "") + "/" + fullPath.split("/")[1];
+            webapis.avplay.setExternalSubtitlePath(packageURI);
+          }
+          // if (!subtitlesOn) {
+          //   webapis.avplay.setSilentSubtitle(true);
+          // }
+        },
+        function (e) {
+          logger.error(e.message);
+        },
+        "r"
+      );
+    },
+  });
+}
+
 var successCallback = function () {
   console.log("The media has finished preparing");
   webapis.avplay.play();
+  downloadAndSetSubtitles();
 };
 
 var errorCallback = function () {
@@ -147,9 +196,18 @@ webapis.avplay.prepareAsync(successCallback, errorCallback);
 //webapis.avplay.stop();
 
 var value = tizen.tvinputdevice.getSupportedKeys();
+var x = document.getElementById("pauseOverlay");
+const pauseOverlay = function () {
+  x.style.display = "block";
+};
+const pausePlayOverlay = function () {
+  x.style.display = "none";
+};
 
 var init = function () {
   console.log("init() called");
+  pausePlayOverlay(); // on video loading remove pause
+  const stop = document.querySelector("#stop");
   // tizen.tvinputdevice.registerKeyBatch(['VolumeUp', 'VolumeDown','MediaPlay','MediaPlayPause','ArrowLeft','ArrowRight']);
   document.body.addEventListener("keydown", function (event) {
     tizen.tvinputdevice.registerKey("MediaPlayPause");
@@ -186,7 +244,7 @@ var init = function () {
         } else if (webapis.avplay.getState() === "PAUSED") {
           webapis.avplay.play();
         }
-
+        pausePlayOverlay();
         break;
       case 13: //Enter
         console.log("played!");
@@ -194,11 +252,13 @@ var init = function () {
         break;
 
       case 19: //MediaPause
-        console.log("paused!");
+        console.log("paused!!!");
+        pauseOverlay();
         webapis.avplay.pause();
         break;
       case 413: // MediaStop
         console.log("stopped!");
+
         webapis.avplay.stop();
         break;
       case 417: // MediaFastForward
@@ -227,6 +287,13 @@ var init = function () {
         }
 
         break;
+      case 10133: // Menu 18
+        if (menu) {
+          closeNav();
+        } else {
+          openNav();
+        }
+        break;
 
       case 403: //ColorF0Red
         console.log("red color");
@@ -251,6 +318,9 @@ var init = function () {
         break;
       case 449: //volum mute
         console.log("volume muted!");
+        break;
+      default:
+        console.log("Key code : " + e.keyCode);
         break;
     }
   });

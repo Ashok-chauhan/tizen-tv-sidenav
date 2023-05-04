@@ -60,3 +60,45 @@
   background-color: red;
   width: 0px;
 }
+
+#subtitles {
+  position: absolute;
+  padding: 15px;
+  /* top: 750px; */
+  /* right: 586px;
+  width: 1294px; */
+  min-height: 24px;
+  z-index: 1;
+  background-color: rgba(120, 120, 120, 0.8);
+  color: #fff;
+  /* font-size: 1.3em; */
+  text-align: center;
+  text-shadow: 0 0 6px #000;
+
+  top: initial;
+  bottom: 140px;
+  right: 0;
+  width: 1920px;
+  font-size: 2em;
+}
+
+.overlay {
+  position: absolute;
+  padding: 15px;
+  /* top: 750px; */
+  /* right: 586px;
+  width: 1294px; */
+  min-height: 24px;
+  z-index: 1;
+  /* background-color: rgba(120, 120, 120, 0.8); */
+  color: #fff;
+  /* font-size: 1.3em; */
+  text-align: center;
+  text-shadow: 0 0 6px #000;
+
+  top: initial;
+  bottom: 500px;
+  right: 0;
+  width: 1920px;
+  font-size: 5em;
+}

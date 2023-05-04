@@ -35,10 +35,13 @@
   }
 
   function registerKeyHandler() {
-    document.addEventListener("keydown", function (e) {
+    //document.addEventListener("keydown", function (e) {
+    document.body.addEventListener("keydown", function (e) {
       tizen.tvinputdevice.registerKey("Menu");
       switch (e.keyCode) {
         case 10133: // Menu 18
+          //case 18: // Menu 18
+          console.log(">>> Menu pressed!");
           if (menu) {
             closeNav();
           } else {
@@ -181,10 +184,20 @@
           const videoUrl = document
             .getElementsByClassName("item focused")
             .item("id").id;
+
+          const caption = document
+            .getElementsByClassName("item focused")
+            .item("caption")
+            .getAttribute("caption");
+          // const caption =
+          //   "https://vod.chdrstatic.com/transcode/7d325650-d5d2-4fcb-9638-4a963a58e09e/7d325650-d5d2-4fcb-9638-4a963a58e09e.transcribe.vtt";
+
+          console.log(document.getElementsByClassName("item focused"));
           console.log(">>>" + videoUrl);
           let ext = videoUrl.split(".").pop();
           if (ext !== ".m3u8") window.location.href = "file:///index.html";
-          window.location.href = "file:///video.html?videoUrl=" + videoUrl;
+          window.location.href =
+            "file:///video.html?videoUrl=" + videoUrl + "&caption=" + caption;
           // var keyName = keys.key.id + keys.key.innerHTML,
           //   index;
           // if ((index = keys.registeredKeys.indexOf(keyName)) !== -1) {
@@ -263,7 +276,7 @@
   function category_id() {
     return new Promise((resolve, reject) => {
       var catId = [];
-      getData("https://prodman.whizti.com/api/publication/116?limit=0")
+      getData("https://prodman.whizti.com/api/publication/326?limit=0")
         .then((data) => {
           let weather = {
             weather_url_whiz:
@@ -345,10 +358,12 @@
           for (let i = 0; i <= data.response.content.length; i++) {
             if (data.response.content[i].icon_uri) {
               div.innerHTML += `
-                <div class="item" name="${categoryId}" id="${
-                data.response.content[i].uri
-              }" >
-                <a href="video.html?videoUrl=${data.response.content[i].uri}">
+                <div class="item" caption="${
+                  data.response.content[i].caption
+                }" id="${data.response.content[i].uri}" >
+                <a href="video.html?videoUrl=${
+                  data.response.content[i].uri
+                }&caption=${data.response.content[i].caption}">
                 
                   <img src="${
                     data.response.content[i].icon_uri
@@ -407,5 +422,7 @@
       });
 
     videoList();
+    openNav();
+    closeNav();
   };
 })();
